@@ -1,10 +1,10 @@
-import { createContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { createContext, useEffect, useState } from "react";
+import styled from "styled-components";
 
-export const VisibleDispatch = createContext<() => void>(() => {});
+export const VisibleDispatch = createContext<(() => void) | null>(null);
 
 const BottomSheetTemplate = (
-  props: React.PropsWithChildren<{ onClose: () => void; modalState: boolean }>,
+  props: React.PropsWithChildren<{ onClose: () => void; modalState: boolean }>
 ) => {
   const [visible, setVisible] = useState<boolean>(props.modalState);
   const [animate, setAnimate] = useState<boolean>(false);
@@ -28,7 +28,9 @@ const BottomSheetTemplate = (
     <VisibleDispatch.Provider value={onCloseModal}>
       <BottomSheetWrapper>
         <BottomSheetDimmed onClick={onCloseModal} modalState={animate} />
-        <BottomSheetInner modalState={animate}>{props.children}</BottomSheetInner>
+        <BottomSheetInner modalState={animate}>
+          {props.children}
+        </BottomSheetInner>
       </BottomSheetWrapper>
     </VisibleDispatch.Provider>
   );
@@ -50,7 +52,8 @@ const BottomSheetDimmed = styled.div<{ modalState: boolean }>`
   bottom: 0;
   right: 0;
   left: 0;
-  ${({ modalState }) => (modalState ? 'backdrop-filter: blur(2px); opacity: 1;' : 'opacity: 0;')}
+  ${({ modalState }) =>
+    modalState ? "backdrop-filter: blur(2px); opacity: 1;" : "opacity: 0;"}
 `;
 
 const BottomSheetInner = styled.div<{ modalState: boolean }>`
@@ -64,8 +67,8 @@ const BottomSheetInner = styled.div<{ modalState: boolean }>`
 
   ${({ modalState }) =>
     modalState
-      ? 'transform: translateY(0); box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.25);'
-      : 'transform: translateY(100%);'}
+      ? "transform: translateY(0); box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.25);"
+      : "transform: translateY(100%);"}
 `;
 
 export default BottomSheetTemplate;

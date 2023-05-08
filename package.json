@@ -1,6 +1,6 @@
 {
   "name": "ksone02-modal",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "simple modal for woowacourse",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
